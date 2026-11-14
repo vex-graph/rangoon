@@ -1,4 +1,7 @@
 # rangoon
+#### yummers :p
+
+> *crab rangoon: Rust is the crab, this crate is the wrapper.*
 
 The Rust vocabulary and storage surface of the vexgraph ecosystem. The C floor is
 `lib` (`vex.h`, `lang/primitive.h`); the relational engine (`vex/re`) owns the C
@@ -79,6 +82,9 @@ Graphics-compute shaders and execution belong to Graphvex. No GPU driver is adde
 to this crate. C name search lives in `search/primitives`; Cargo builds
 only that module with strict C23 flags, using CC/AR when supplied. The upstream FFF toolkit
 is https://github.com/dmtrKovalenko/fff, not an on-disk format.
+
+The reading document for this half is `docs/rangoon-primer.md`; the C boundary has
+its own primer in `re`: `../vex/re/docs/relational-engine-primer.md`.
 
 ## Stable rows and 32-byte bindings
 
