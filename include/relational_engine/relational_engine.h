@@ -4,6 +4,8 @@
 // relational_engine/relational_engine.h — the Rust C ABI directory door.
 
 #include "vex.h"
+#include "relational_engine/block_handle.h"
+#include "relational_engine/block_table.h"
 #include "relational_engine/fixed_mapped_file.h"
 #include "relational_engine/growable_mapped_file.h"
 #include "relational_engine/memory.h"

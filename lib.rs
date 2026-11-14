@@ -33,6 +33,8 @@ pub use nio::mapping_error::MappingError;
 pub use io::preallocated_file::PreallocatedFile;
 pub use io::preallocation_error::PreallocationError;
 pub use nio::chunk::Chunk;
+pub use nio::block_handle::BlockHandle;
+pub use nio::block_table::BlockTable;
 pub use nio::handle::Handle;
 pub use nio::typed_chunk::TypedChunk;
 pub use nio::storage_error::StorageError;
