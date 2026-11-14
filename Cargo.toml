@@ -1,0 +1,10 @@
+[package]
+name = "rangoon"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "BSL-1.0"
+description = "Rust vocabulary and library surface for the vexgraph ecosystem"
+
+[lib]
+path = "lib.rs"
