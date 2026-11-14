@@ -4,7 +4,15 @@ version = "0.0.0"
 edition = "2024"
 publish = false
 license = "BSL-1.0"
-description = "Rust vocabulary and library surface for the vexgraph ecosystem"
+description = "Rust vocabulary and storage library for the vexgraph ecosystem"
+
+[dependencies]
+relational-annotations = { path = "annotations" }
+memmap2 = "0.9"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
 
 [lib]
 path = "lib.rs"
+crate-type = ["rlib", "staticlib"]
