@@ -3,6 +3,6 @@
 
 #include "vex.h"
 
-int re_name_search(const u8 *source, bytes spanBytes, bytes stride,
+i32 re_name_search(const u8 *source, bytes spanBytes, bytes stride,
                    const u8 *key, bytes keyBytes, bytes *outIndex);
 #endif

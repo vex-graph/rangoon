@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
+i32 main() {
     ReVariableRegistry *owner = nullptr;
     assert(re_variables_new(0, &owner) == 1 && owner == nullptr);
     assert(re_variables_new(2, &owner) == 0);
@@ -20,7 +20,7 @@ int main() {
     const ReVariableSlot *original = slot;
     for (bytes i = 1; i < 1025; ++i) {
         char name[24];
-        int length = snprintf(name, sizeof(name), "field%zu", i);
+        i32 length = snprintf(name, sizeof(name), "field%zu", i);
         assert(length > 0 && length < 24);
         assert(re_variables_add(owner, (const u8*) name, (bytes) length, nullptr, &index) == 0 && index == i);
     }

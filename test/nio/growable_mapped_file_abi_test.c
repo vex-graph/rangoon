@@ -24,7 +24,7 @@ static char otherPath[512];
 static fn reservePathInto(char *dest, bytes cap) {
     const char *dir = getenv("TMPDIR");
     (discard) snprintf(dest, cap, "%s/re-gmap-XXXXXX", dir != nullptr ? dir : "/tmp");
-    int fd = mkstemp(dest);
+    i32 fd = mkstemp(dest);
     assert(fd >= 0);
     assert(close(fd) == 0);
     assert(unlink(dest) == 0);
@@ -32,7 +32,7 @@ static fn reservePathInto(char *dest, bytes cap) {
 
 static fn reservePath() { reservePathInto(path, sizeof path); }
 
-int main() {
+i32 main() {
     ReGrowableMappedFile *owner = nullptr;
     bytes len = 0u, reserved = 0u;
     u64 allocated = 0u;
@@ -57,11 +57,11 @@ int main() {
     re_gmap_drop(nullptr);
 
     reservePath();
-    int fd = open(path, O_CREAT | O_WRONLY, 0600);
+    i32 fd = open(path, O_CREAT | O_WRONLY, 0600);
     assert(fd >= 0 && close(fd) == 0);
     assert(re_gmap_create(path, 4096u, 0u, &owner) == 2u);
     u8 untouched[8];
-    int check = open(path, O_RDONLY);
+    i32 check = open(path, O_RDONLY);
     assert(check >= 0);
     assert(read(check, untouched, sizeof untouched) == 0);
     assert(close(check) == 0);
@@ -160,7 +160,7 @@ int main() {
     assert(unlink(path) == 0);
 
     reservePath();
-    int shortFd = open(path, O_CREAT | O_WRONLY, 0600);
+    i32 shortFd = open(path, O_CREAT | O_WRONLY, 0600);
     assert(shortFd >= 0);
     assert(write(shortFd, payload, sizeof payload) == (ssize_t) sizeof payload);
     assert(close(shortFd) == 0);

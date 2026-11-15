@@ -16,7 +16,7 @@
 enum { NAME_BYTES = 24, SEARCH_FOUND = 0, SEARCH_MISSING = 1, SEARCH_INVALID = 2 };
 
 /** Scan fixed-width name keys in borrowed rows, preserving outIndex unless a match is found. */
-int re_name_search(const u8 *source, bytes spanBytes, bytes stride,
+i32 re_name_search(const u8 *source, bytes spanBytes, bytes stride,
                    const u8 *key, bytes keyBytes, bytes *outIndex) {
     if (key == nullptr || outIndex == nullptr || keyBytes != NAME_BYTES ||
         stride < NAME_BYTES || spanBytes > PTRDIFF_MAX || spanBytes % stride != 0 ||

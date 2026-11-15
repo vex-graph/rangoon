@@ -1,5 +1,5 @@
 // Owner: engine C strided-name primitive. No allocator or Rust atomic layout.
-// Assert normal/empty/missing, exact/short keys, nulls and overflowing spans;
+// Assert normal/empty/missing, exact/i16 keys, nulls and overflowing spans;
 // rejection leaves output intact. Runner asserts exactly one diagnostic per bad call.
 
 #include "vex.h"
@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <string.h>
 
-int main() {
+i32 main() {
     u8 rows[3][32] = {{0}};
     memcpy(rows[0], "alpha", 5);
     memcpy(rows[1], "beta", 4);

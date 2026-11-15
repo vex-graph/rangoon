@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <string.h>
 /* Exercises the standalone C ABI client's copy/read behavior and safe rejection preservation. */
-int main() {
+i32 main() {
     ReMemory *owner = re_memory_new();
     u64 id = 0;
     const u8 hello[] = {104, 101, 108, 108, 111};

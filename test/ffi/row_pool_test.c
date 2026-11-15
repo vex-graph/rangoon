@@ -168,7 +168,7 @@ static fn storage_contract() {
 }
 
 /* Executes all deterministic owner scenarios with assertions retained. */
-int main() {
+i32 main() {
     layout();
     geometry_rejections();
     storage_contract();

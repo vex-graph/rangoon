@@ -1,6 +1,6 @@
 /* C client of the Rust fixed-extent mapping ABI, through the canonical header
  * nio/fixed_mapped_file.h. Proves the whole handshake from C: admission, checked
- * reads, a read-only borrow, a refused short read, write-back, flush/sync, close
+ * reads, a read-only borrow, a refused i16 read, write-back, flush/sync, close
  * and drop — plus the refusals that must never half-fill a caller's buffer.
  * Not a Hotcwap loader test, not a second mapping implementation. */
 #define POSIX_C_SOURCE 200809L
@@ -22,7 +22,7 @@ static char path[512];
 static fn makeFile(bytes size) {
     const char *dir = getenv("TMPDIR");
     (discard) snprintf(path, sizeof path, "%s/re-mmap-XXXXXX", dir != nullptr ? dir : "/tmp");
-    int fd = mkstemp(path);
+    i32 fd = mkstemp(path);
     assert(fd >= 0);
     u8 buffer[SIZE];
     for (bytes i = 0; i < size; ++i)
@@ -34,7 +34,7 @@ static fn makeFile(bytes size) {
 
 static u8 expected(bytes index) { return (u8) (index * 7u + 1u); }
 
-int main() {
+i32 main() {
     ReFixedMappedFile *owner = nullptr;
     bytes len = 0u;
     bool flag = false;
@@ -122,7 +122,7 @@ int main() {
     re_mmap_drop(owner);
 
     u8 disk[SIZE];
-    int fd = open(path, O_RDONLY);
+    i32 fd = open(path, O_RDONLY);
     assert(fd >= 0);
     assert((bytes) read(fd, disk, sizeof disk) == SIZE);
     assert(close(fd) == 0);

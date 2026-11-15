@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <string.h>
 
-int main() {
+i32 main() {
     ReMemory *owner = re_memory_new();
     u64 byteId = 99;
     assert(re_memory_new_atomic_byte(owner, 0, &byteId) == 0);
