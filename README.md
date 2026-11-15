@@ -14,8 +14,10 @@ own C ABI.
 already the name (`u8`..`u64`, `i8`..`i64`, `f32`, `bool`) gets no alias; the gap
 is projected once:
 
-- `d64` = `f64`, `bytes` = `usize`
-- `any` = `*mut c_void`, `const_any` = `*const c_void`
+- `d64` = `f64`
+- `bytes` = `usize`
+- `any` = `*mut c_void`
+- `const_any` = `*const c_void`
 - `fnptr` = `Option<unsafe extern "C" fn(any) -> any>`
 
 `b16` and the float atomics (`af32`, `ad64`, `ald128`) are owned types, not
