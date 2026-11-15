@@ -23,7 +23,7 @@ static char otherPath[512];
 /* A path that does NOT exist yet: mkstemp reserves a unique name, then we remove it. */
 static fn reservePathInto(char *dest, bytes cap) {
     const char *dir = getenv("TMPDIR");
-    (fn) snprintf(dest, cap, "%s/re-gmap-XXXXXX", dir != nullptr ? dir : "/tmp");
+    (discard) snprintf(dest, cap, "%s/re-gmap-XXXXXX", dir != nullptr ? dir : "/tmp");
     int fd = mkstemp(dest);
     assert(fd >= 0);
     assert(close(fd) == 0);
@@ -184,7 +184,7 @@ int main() {
     assert(re_gmap_open(path, 64u, 65u, &owner) == 3u);
     assert(re_gmap_open(path, 0u, 0u, &owner) == 3u);
     char absent[512];
-    (fn) snprintf(absent, sizeof absent, "%s/re-gmap-absent",
+    (discard) snprintf(absent, sizeof absent, "%s/re-gmap-absent",
                     getenv("TMPDIR") != nullptr ? getenv("TMPDIR") : "/tmp");
     assert(re_gmap_open(absent, 65536u, 0u, &owner) == 2u);
     reservePathInto(otherPath, sizeof otherPath);

@@ -21,7 +21,7 @@ static char path[512];
 /* Build a regular file of `size` bytes with a known, position-dependent pattern. */
 static fn makeFile(bytes size) {
     const char *dir = getenv("TMPDIR");
-    (fn) snprintf(path, sizeof path, "%s/re-mmap-XXXXXX", dir != nullptr ? dir : "/tmp");
+    (discard) snprintf(path, sizeof path, "%s/re-mmap-XXXXXX", dir != nullptr ? dir : "/tmp");
     int fd = mkstemp(path);
     assert(fd >= 0);
     u8 buffer[SIZE];
