@@ -45,7 +45,10 @@ pub use nio::row_handle::RowHandle;
 pub use nio::row_chunk::RowChunk;
 pub use variable::variable_slot::VariableSlot;
 pub use variable::variable_registry::VariableRegistry;
-pub use primitive::{any, bytes, const_any, d64, fnptr};
+pub use primitive::{
+    ad64, af32, ai16, ai32, ai64, ai8, aif64, ald128, any, au16, au32, au64, au8, b16, bytes,
+    const_any, d64, fnptr, if64, ld128,
+};
 
 /// Canonical constructor convenience, sharing the type's name in the macro namespace.
 // INTENTIONAL(vex): CamelCase constructor macros preserve class-like construction;
