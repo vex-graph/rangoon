@@ -117,7 +117,7 @@ impl<T> TypedChunk<T> {
 
     /// Mutably borrow a live value at `index`; empty slots and out-of-range indices return `None`.
     pub fn get_mut(&mut self, index: usize) -> Option<&mut T> {
-        if self.get(index).is_none() { return None; }
+        self.get(index)?;
         Some(unsafe { self.rows[index].assume_init_mut() })
     }
 
