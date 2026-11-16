@@ -12,17 +12,22 @@ own C ABI.
 
 `primitive.rs` projects the floor vocabulary into Rust tokens. A token that is
 already the name (`u8`..`u64`, `i8`..`i64`, `f32`, `bool`) gets no alias; the gap
-is projected once:
+and composite/atomic floor types are projected once:
 
-- `d64` = `f64`
-- `bytes` = `usize`
-- `any` = `*mut c_void`
-- `const_any` = `*const c_void`
-- `fnptr` = `Option<unsafe extern "C" fn(any) -> any>`
+| C (`lib/lang/primitive.h`) | Rust (`rangoon`) | Form |
+|---|---|---|
+| `d64` | `d64` (`f64`) | type alias |
+| `bytes` | `bytes` (`usize`) | type alias |
+| `any` / `const_any` | `*mut c_void` / `*const c_void` | type alias |
+| `fnptr` | `Option<unsafe extern "C" fn(any) -> any>` | type alias |
+| `ai8`..`ai64`, `au8`..`au64` | `AtomicI8`..`AtomicU64` | type alias |
+| `b16` | `primitives::b16` | `#[repr(C)]` struct (`2` bytes) + `b16!` |
+| `af32` / `ad64` | `primitives::af32` / `primitives::ad64` | `#[repr(transparent)]` atomic cell |
+| `if64` / `ld128` | `primitives::if64` / `primitives::ld128` | `#[repr(C, align(8))]` split pair + `if64!` / `ld128!` |
+| `aif64` / `ald128` | `primitives::aif64` / `primitives::ald128` | whole-word (`8B`) / dual-half (`16B`) atomic cell |
 
-`b16` and the float atomics (`af32`, `ad64`, `ald128`) are owned types, not
-aliases. `pointer` is not aliased: Rust spells a pointer `*mut T`/`*const T` and
-an address `usize`. Compile-time width assertions mirror the C floor's
+`pointer` is not aliased: Rust spells a pointer `*mut T`/`*const T` and
+an address `usize`. Compile-time width and offset assertions mirror the C floor's
 `_Static_assert`s.
 
 ## Current State
@@ -96,9 +101,9 @@ let mut values = ChunkedList!(u64, 64).unwrap();
 values.add(42).unwrap();
 let gold = values.get(0).unwrap() as *const u64;
 let mut names = VariableRegistry!(64).unwrap();
-names.add(b.sh"Gold", gold.cast()).unwrap();
+names.add(b"Gold", gold.cast()).unwrap();
 values.add(99).unwrap(); // Existing row allocation does not move.
-assert_eq!(names.find(b.sh"gold").unwrap(), Some(0));
+assert_eq!(names.find(b"gold").unwrap(), Some(0));
 // names stores a borrowed pointer: keep values alive while any consumer uses it.
 ```
 
@@ -129,7 +134,7 @@ Constructor macros are CamelCase: `Memory!()` and `Bytes!()`. Lowercase
 use rangoon::{Memory, Bytes};
 let mut memory = Memory!();
 let hello = memory.copy_bytes(Bytes!("hello"))?;
-assert_eq!(memory.get(hello)?, b.sh"hello");
+assert_eq!(memory.get(hello)?, b"hello");
 # Ok::<(), rangoon::MemoryError>(())
 ```
 
