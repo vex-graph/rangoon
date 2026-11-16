@@ -64,7 +64,7 @@ fn create_grow_and_never_move_the_mapping() {
     file.flush().unwrap();
     file.sync().unwrap();
     file.close();
-    assert!(!file.is_open() && file.len() == 0 && file.as_slice().is_empty());
+    assert!(!file.is_open() && file.is_empty() && file.as_slice().is_empty());
     assert!(matches!(file.read(0, 1), Err(MappingError::Closed)));
     assert!(matches!(file.as_mut_slice(), Err(MappingError::Closed)));
     assert!(matches!(file.grow_to(1), Err(MappingError::Closed)));
@@ -76,7 +76,7 @@ fn create_grow_and_never_move_the_mapping() {
 #[test]
 fn admission_empty_owner_and_projections() {
     let zero = GrowableMappedFile::zero();
-    assert!(!zero.is_open() && zero.len() == 0 && zero.reserved() == 0);
+    assert!(!zero.is_open() && zero.is_empty() && zero.reserved() == 0);
     assert!(zero.as_slice().is_empty());
     assert!(matches!(zero.read(0, 0), Err(MappingError::Closed)));
 

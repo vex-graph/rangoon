@@ -28,7 +28,7 @@ mod preallocation {
     }
     pub(crate) fn allocated_bytes(_file: &File) -> Result<u64, PreallocationError> {
         match STAGE.with(|stage| stage.get()) {
-            3 => Err(io::Error::new(io::ErrorKind::Other, "query failure").into()),
+            3 => Err(io::Error::other("query failure").into()),
             4 => Ok(7),
             _ => Ok(8),
         }
